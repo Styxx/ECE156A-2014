@@ -1,39 +1,4 @@
 /*
-* Testbench
-*/
-
-module BehavBCDto7TB();
-
-reg [3:0]d_in;
-wire [6:0] all_out;
-
-BehavBCDto7 bcd(all_out, d_in);
-
-//setup
-initial
-begin
-	d_in <= 4'b0000;
-	#10 d_in <= 4'b0001;
-	#20 d_in <= 4'b0010;
-	#30 d_in <= 4'b0011;
-	#40 d_in <= 4'b0100;
-	#50 d_in <= 4'b0101;
-	#60 d_in <= 4'b0110;
-	#70 d_in <= 4'b0111;
-	#80 d_in <= 4'b1000;
-	#90 d_in <= 4'b1001;
-	#100 d_in <= 4'b1010;
-	#110 d_in <= 4'b1100;
-	#120 d_in <= 4'b1101;
-	#130 d_in <= 4'b1110;
-	#140 d_in <= 4'b1111;
-	#150 d_in <= 4'b0000;
-	#160 d_in <= 4'b0001;
-
-end
-endmodule
-
-/*
 *  Behavioural BCD to 7-segment decoder
 *  Signals are active low
 */
@@ -67,4 +32,39 @@ module BehavBCDto7(all_out, d_in);
       default: all_out = 7'b0110110;
     endcase
 
+endmodule
+
+/*
+* Testbench
+*/
+
+module BehavBCDto7TB();
+
+reg [3:0]d_in;
+wire [6:0] all_out;
+
+BehavBCDto7 bcd(all_out, d_in);
+
+//setup
+initial
+begin
+	d_in <= 4'b0000;
+	#10 d_in <= 4'b0001;
+	#20 d_in <= 4'b0010;
+	#30 d_in <= 4'b0011;
+	#40 d_in <= 4'b0100;
+	#50 d_in <= 4'b0101;
+	#60 d_in <= 4'b0110;
+	#70 d_in <= 4'b0111;
+	#80 d_in <= 4'b1000;
+	#90 d_in <= 4'b1001;
+	#100 d_in <= 4'b1010;
+	#110 d_in <= 4'b1100;
+	#120 d_in <= 4'b1101;
+	#130 d_in <= 4'b1110;
+	#140 d_in <= 4'b1111;
+	#150 d_in <= 4'b0000;
+	#160 d_in <= 4'b0001;
+
+end
 endmodule
