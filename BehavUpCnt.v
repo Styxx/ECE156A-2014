@@ -1,3 +1,28 @@
+
+/*
+* Behavioural 4-bit counter
+* with active low asynch/synch resets and enable
+* Counts up from 0 to 15 and repeats
+*/
+module BehavUpCnt(count, start,a_reset,s_reset,clk);
+  input start, a_reset, s_reset, clk;
+  output [3:0] count;
+
+  reg [3:0] count;
+
+  always @ (posedge clk or a_reset)
+    if(~a_reset) begin
+	count = 4'b0;
+    end else if (~s_reset) begin
+	count = 4'b0;
+    end else if (~start) begin
+	count <= count + 1;
+    end
+
+endmodule
+
+
+
 /*
 * Testbench
 */
@@ -32,27 +57,4 @@ always
 begin
 	#20 clk <= ~clk; // clock signal with period of 20
 end
-endmodule
-
-/*
-* Behavioural 4-bit counter
-* with active low asynch/synch resets and enable
-* Counts up from 0 to 15 and repeats
-*/
-
-module BehavUpCnt(count, start,a_reset,s_reset,clk);
-  input start, a_reset, s_reset, clk;
-  output [3:0] count;
-
-  reg [3:0] count;
-
-  always @ (posedge clk or a_reset)
-    if(~a_reset) begin
-	count = 4'b0;
-    end else if (~s_reset) begin
-	count = 4'b0;
-    end else if (~start) begin
-	count <= count + 1;
-    end
-
 endmodule
