@@ -5,7 +5,7 @@
 */
 
 
-module machine_x(z, clk, in, reset);
+module machine_a(z, clk, in, reset);
 	input clk, in, reset;
 	output z;
 
