@@ -18,11 +18,11 @@ module machine_b(z, clk, in, reset);
 			shift_reg[4:0] = 5'b00000;
 		end
 		else begin
-			shift_reg[4] = shift_reg[3];
-			shift_reg[3] = shift_reg[2];
-			shift_reg[2] = shift_reg[1];
-			shift_reg[1] = shift_reg[0];
-			shift_reg[0] = in;
+			shift_reg[0] = shift_reg[1];
+			shift_reg[1] = shift_reg[2];
+			shift_reg[2] = shift_reg[3];
+			shift_reg[3] = shift_reg[4];
+			shift_reg[4] = in;
 
 			if ((shift_reg[4:0] == 5'b00010) || 
 			   (shift_reg[4:0] == 5'b00100) ||
