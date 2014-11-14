@@ -117,7 +117,7 @@ module machine_a(z, clk, in, reset);
 
 			C00:begin
 				z = 0;
-				s0 = 0;
+			/*	s0 = 0;
 				s1 = 0;
 				s2 = 0;
 				s3 = 0;
@@ -125,7 +125,7 @@ module machine_a(z, clk, in, reset);
 				s5 = 1;
 				s6 = 0;
 				s7 = 0;
-				s8 = 0;		
+				s8 = 0;		*/
 				if(!in) next = C00;
 				else next = C001;
 			end
