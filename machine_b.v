@@ -2,6 +2,7 @@
 *  Pattern Detecting Machine - Shift Register
 *  Checks for the patterns 0100 or 00010
 *  Rightmost bit arrives first
+*  Shifts to the left (not the right)
 */
 
 
