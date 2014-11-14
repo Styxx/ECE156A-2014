@@ -24,11 +24,11 @@ module machine_b(z, clk, in, reset);
 			shift_reg[1] = shift_reg[0];
 			shift_reg[0] = in;
 
-			if ((shift_reg[4:0] == 5'b01000) || 
-			   (shift_reg[4:0] == 5'b00010) ||
-			   (shift_reg[4:0] == 5'b10010) ||
-			   (shift_reg[4:0] == 5'b00101) ||
-			   (shift_reg[4:0] == 5'b00100))
+			if ((shift_reg[4:0] == 5'b00010) || 
+			   (shift_reg[4:0] == 5'b00100) ||
+			   (shift_reg[4:0] == 5'b10100) ||
+			   (shift_reg[4:0] == 5'b01001) ||
+			   (shift_reg[4:0] == 5'b01000))
 				z = 1;
 			else
 				z = 0;
