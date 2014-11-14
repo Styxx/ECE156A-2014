@@ -12,21 +12,21 @@ module machine_a(z, clk, in, reset);
 	reg [3:0] state, next;
 	reg z;
 
-	parameter A0 = 5'd0;
+	parameter A0 = 4'd0;
 	
 	//path for 01000
-	parameter B01 = 5'd1;
-	parameter B010 = 5'd2;
-	parameter B0100 = 5'd3;
-	parameter B01000 = 5'd4;
+	parameter B01 = 4'd1;
+	parameter B010 = 4'd2;
+	parameter B0100 = 4'd3;
+	parameter B01000 = 4'd4;
 
 	//path for 0010
-	parameter C00 = 5'd5;
-	parameter C001 = 5'd6;
-	parameter C0010 = 5'd7;
+	parameter C00 = 4'd5;
+	parameter C001 = 4'd6;
+	parameter C0010 = 4'd7;
 
 	//Extra 1 path;
-	parameter D11 = 5'd8;
+	parameter D11 = 4'd8;
 
 	always @ (negedge clk) begin
 		if(!reset)
