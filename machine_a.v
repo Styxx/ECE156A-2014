@@ -39,10 +39,13 @@ module machine_a(z, clk, in, reset);
 	
 	always @ (state or in or next) begin
 		//Default start
-		next = state;
-		z = 0;
 
 		case (state)
+			default:begin
+				next = state;
+				z = 0;
+			end
+			
 			A0:begin
 				z = 0;
 			/*	s0 = 1;
