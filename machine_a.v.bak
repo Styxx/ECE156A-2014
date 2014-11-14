@@ -2,6 +2,7 @@
 *  Pattern Detecting Machine - State Level
 *  Checks for the patterns 0100 or 00010
 *  Rightmost bit arrives first
+*  Requires an initial reset to get set to the correct state.
 */
 
 
@@ -37,11 +38,12 @@ module machine_a(z, clk, in, reset);
 	end
 	
 	always @ (state or in or next) begin
-		//Default start
-		next = state;
-		z = 0;
-
 		case (state)
+			default:begin
+				next = state;
+				z = 0;
+			end
+			
 			A0:begin
 				z = 0;
 			/*	s0 = 1;
@@ -116,7 +118,7 @@ module machine_a(z, clk, in, reset);
 
 			C00:begin
 				z = 0;
-				s0 = 0;
+			/*	s0 = 0;
 				s1 = 0;
 				s2 = 0;
 				s3 = 0;
@@ -124,7 +126,7 @@ module machine_a(z, clk, in, reset);
 				s5 = 1;
 				s6 = 0;
 				s7 = 0;
-				s8 = 0;		
+				s8 = 0;		*/
 				if(!in) next = C00;
 				else next = C001;
 			end
