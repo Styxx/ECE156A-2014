@@ -2,7 +2,7 @@
 *   Purchase Manager
 *   Inputs buy signal, 2-bit product code, and credit
 *   Checks if user has enough credit. Output signal for 1 clk cyc to piggyBank
-/*
+*/
 
 module purchaseMngr(input clk, buy, input [1:0] product, input [7:0] credit, output apple, banana, carrot, date, error);
   input clk, buy;
@@ -54,7 +54,7 @@ module purchaseMngr(input clk, buy, input [1:0] product, input [7:0] credit, out
               error = 1;
             }
           
-          #1 apple = 0; banana = 0; carrot = 0; date = 0; error = 0;
+          #1 apple = 0; banana = 0; carrot = 0; date = 0; error = 0;    // Output only for 1 cycle
         end
   end
 endmodule
