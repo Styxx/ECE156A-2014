@@ -12,7 +12,7 @@ module coinSensor(penny,nickel,dime,quarter, clk,reset,serialIn);
   reg [4:0] shift_reg;
   reg penny, nickel, dime, quarter;
   
-  always @ (posedge clk or reset)
+  always @ (negedge clk or reset)
     begin
       if (!reset) begin
         shift_reg[4:0] = 5'b00000;

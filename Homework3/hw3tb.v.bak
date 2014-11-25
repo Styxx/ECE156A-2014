@@ -19,7 +19,7 @@ initial begin
 
   #150 reset = 0;
   #100 reset = 1;
-  #100 serialIn = 0; #100 serialIn = 1; #100 serialIn = 0; #100 serialIn = 0;				// 0100
+  #100 serialIn = 0; #100 serialIn = 1; #100 serialIn = 0; #100 serialIn = 0;			// 0100
   #100 serialIn = 0; #100 serialIn = 0; #100 serialIn = 0; #100 serialIn = 1; #100 serialIn = 0;	//00010
   #100 serialIn = 0; #100 serialIn = 1; #100 serialIn = 1; #100 serialIn = 1; #100 serialIn = 0;	//01110
   #100 serialIn = 0; #100 serialIn = 1; #100 serialIn = 0; #100 serialIn = 1; #100 serialIn = 0;	//01010
