@@ -13,8 +13,9 @@ module sevenSegDispMngr (input clk, reset, apple, banana, carrot, date, error,
   output [6:0] digit1, digit0;
   reg [6:0] digit1, digit0;
   
-  always @ (posedge clk)
-    begin
+  
+  always @ (posedge clk)      // If making purchase
+   begin
     
     
     
@@ -24,5 +25,20 @@ module sevenSegDispMngr (input clk, reset, apple, banana, carrot, date, error,
     
     
     end
-
+    
+ if (!apple && !banana && !carrot && !date && !error)
+  begin
+   always @ (posedge clk)      // If not making purchase, display credit
+   begin
+   if (!reset) {
+    digit1 = 7'b0000000;
+    digit2 = 7'b0000000;
+   }
+   else{
+   
+      // Display credit
+   
+   }
+   end
+ }
 endmodule
