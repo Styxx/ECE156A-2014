@@ -28,31 +28,31 @@ module coinSensor(penny,nickel,dime,quarter, clk,reset,serialIn);
           (shift_reg[4:0] == 5'b10100) ||
           (shift_reg[4:0] == 5'b01000) ||
           (shift_reg[4:0] == 5'b01001)) {
-            penny = 1;
-            nickel = 0;
-            dime = 0;
-            quarter = 0;
-            shift_reg[4:0] = 5'b00000;
+            penny <= 1;
+            nickel <= 0;
+            dime <= 0;
+            quarter <= 0;
+            shift_reg[4:0] <= 5'b00000;
         } else if (shift_reg[4:0] == 5'b00010){
-            penny = 0;
-            nickel = 1;
-            dime = 0;
-            quarter = 0;
-            shift_reg[4:0] = 5'b00000;
+            penny <= 0;
+            nickel <= 1;
+            dime <= 0;
+            quarter <= 0;
+            shift_reg[4:0] <= 5'b00000;
         } else if (shift_reg[4:0] == 5'b01110){
-            penny = 0;
-            nickel = 0;
-            dime = 1;
-            quarter = 0;
-            shift_reg[4:0] = 5'b00000;
+            penny <= 0;
+            nickel <= 0;
+            dime <= 1;
+            quarter <= 0;
+            shift_reg[4:0] <= 5'b00000;
         } else if (shift_reg[4:0] == 5'b01010){
-            penny = 0;
-            nickel = 0;
-            dime = 0;
-            quarter = 1;
-            shift_reg[4:0] = 5'b00000;
+            penny <= 0;
+            nickel <= 0;
+            dime <= 0;
+            quarter <= 1;
+            shift_reg[4:0] <= 5'b00000;
         } else
-            penny = 0; nickel = 0;, dime = 0; quarter = 0;
+            penny <= 0; nickel <= 0;, dime <= 0; quarter <= 0;
       end
     end
 endmodule
