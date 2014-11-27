@@ -4,9 +4,10 @@ SystemVerilog (4 parts)
   2. Build Covergroups, Build Coverpoints
   3. Constraint Randomization
   4. Interface 2 & 3 with your module (Check report)
+
+// *** Shouldn't need more than 500 to 1000 clock cycles for all coverages *** //
   
-  
-  
+//~~~~~~~EXAMPLE CODE BEGINS~~~~~~~~//
   
 //-----Constraint Randomization-----//
 class random_buy;
@@ -22,19 +23,23 @@ endclass
 module testBench()
   reg ....
   wire ....
-  VendingMachine VM (clk, reset ....)
+  VendingMachine VM (clk, reset, ....)
   
 //-----Building Covergroups and Coverpoints-----//
+
+// all bins must be hit in order to verify for 100% coverage
+
+// Trans Cov = ensure all coins + no coin work & all credit ranges possible
   covergroup Trans_Cov @ (clk)
-    PENNY: coverpoint VM.penny {bins pennyDetected = {1};}
+    PENNY: coverpoint VM.penny {bins pennyDetected = {1};}    // If the penny signal = 1, then bin is covered
     NICKEL: .....
     .
     .
     .
     .
     .
-    CREDITS: coverpoint VM.credits {        //1-4, 5-9, 10-24,25-39,40-49,50-74,75-max,max
-      bins 1to4 = { [1:4] };
+    CREDITS: coverpoint VM.credits {    
+      bins 1to4 = { [1:4] };                                  // If credits reach value from 1 to 4, bin is covered
       bins 5to9 = { [5:9] };
       .
       .
@@ -42,6 +47,7 @@ module testBench()
     }
   endgroup
   
+// Cross coverage = product + error, product + no error, no buy product + error, no buy product + no error
   covergroup Cross_Cov @ (clk)
     PRODUCTS: coverpoint VM.product {
       .
@@ -70,8 +76,8 @@ module testBench()
     
     
     //---Randomize Inputs---//
-    repeat (100) begin
-      assert (rb.randomize())       //rb.index (and any other rand var in rb) now has random value w/in constraints
+    repeat (100) begin              // For 100 times... (100 is a good starting point)
+      assert (rb.randomize())       // rb.index (and any other rand var in rb) now has random value w/in given constraint(s)
      
       // push coins (5 cycles)                  //Parallel
       // buy item / don't buy item / product    //Parallel
@@ -91,7 +97,6 @@ module testBench()
       
       
   end
-
-
-
+  
+  
 endmodule
