@@ -12,6 +12,9 @@ SystemVerilog (4 parts)
 class random_buy;
   rand int index;
   constraint c { index > 0; index <=4; }      //0-4 for 4 coins and a no coin signal
+  // Want to create buy variable and constraint, but make sure you don't buy every cycle in order to meet requirements.
+  // Therefore, have buy be something like [0, 0, 0, 1, 1]
+  // Also want to create a random variable for buying a product [00, 01, 10, 11]
 endclass
 
 
@@ -19,7 +22,7 @@ endclass
 module testBench()
   reg ....
   wire ....
-  VendingMachine WVM (clk, reset ....)
+  VendingMachine VM (clk, reset ....)
   
 //-----Building Covergroups and Coverpoints-----//
   covergroup Trans_Cov @ (clk)
@@ -66,8 +69,22 @@ module testBench()
     
     repeat (100) begin
     assert (rb.randomize())       //rb.index (and any other rand var in rb) now has random value w/in constraints
-    // push coins (5 cycles)
-    // buy item / don't buy item/
+    // push coins (5 cycles)                  //Parallel
+    // buy item / don't buy item / product    //Parallel
+    /*
+    *   The idea for this is that rb.index will go to an index in an array of sorts. The array will hold the serialIn values
+    *   for penny, nickel, dime, quarter, and no input.
+    *   Then a number for the corresponding coin code is pushed in each clock cycle, simulating the serialIn of a coin.
+    *   Make sure to pad penny with 1's at the end to prevent possibility of confusion.
+    *
+    *   d   [penny, nickel, dime, quarter, no coin]
+    *   d[3] = 00110
+    *
+    *   buy   [0, 0, 0, 1, 1]
+    *   product [00, 01, 10, 11]
+    */
+    
+    
     
   end
 
