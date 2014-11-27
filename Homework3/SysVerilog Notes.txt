@@ -1,0 +1,76 @@
+SystemVerilog (4 parts)
+
+  1. Logistics (compiler options, enable coverage)
+  2. Build Covergroups, Build Coverpoints
+  3. Constraint Randomization
+  4. Interface 2 & 3 with your module (Check report)
+  
+  
+  
+  
+
+class random_buy;
+  rand int index;
+  constraint c { index > 0; index <=4; }
+endclass
+
+
+
+module testBench()
+
+reg ....
+wire ....
+
+VendingMachine WVM (clk, reset ....)
+
+covergroup Trans_Cov @ (clk)
+
+  PENNY: coverpoint VM.penny {bins pennyDetected = {1};}
+  NICKEL: .....
+  
+  .
+  .
+  .
+  .
+  .
+  
+  CREDITS: coverpoint VM.credits {
+    bins 1to4 = { [1:4] };
+    bins 5to9 = { [5:9] };
+    .
+    .
+    .
+  }
+endgroup
+
+covergroup Cross_Cov @ (clk)
+  PRODUCTS: coverpoint VM.product {
+    .
+    .
+    .
+  }
+  ERROR: coverpoint VM.error {
+    .
+    .
+    .
+  }
+  CROSS_COV: cross PRODUCTS, ERROR;
+endgroup
+
+
+
+
+initial begin
+  random_buy rb = new();
+  ...
+  Trans_Cov tc = new();
+  Cross_Cov cc = new();
+  ...
+  
+  // Set initial values
+  // randomize inputs
+  
+  repeat (100) begin
+  assert (rb.randomize())       //rb.index (and any other rand var in rb) now has random value w/in constraints
+  // push coins (5 cycles)
+  // buy item / don't buy item/
