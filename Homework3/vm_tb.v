@@ -2,7 +2,6 @@
 *   Testbench for the Vending Machine
 /*
 
-
 class random_buy;
   rand int index;                                     
   rand int buyC;                                          //buyChance - chance to buy a product
@@ -39,18 +38,55 @@ module vmTestBench();
   
   covergroup Cross_Cov @ (clk)
     PRODUCTS: coverpoint VM.product {
-      bins appleDetected = {00};
-      bins bananaDetected = {01};
-      bins carrotDetected = {10};
-      bins dateDetected = {11};
+      bins appleDetected = {0};           //00
+      bins bananaDetected = {1};          //01
+      bins carrotDetected = {2};          //10
+      bins dateDetected = {3};            //11
     }
-    ERROR: coverpoint VM.error {                // UNSURE ABOUT THIS COVERPOINT
+    /* UNSURE ABOUT THE ERROR COVERPOINT
+    *  There is no error signal or wire in the entire module
+    *  But VM.[wire] is how we check for coverpoint signals  
+    *  If there's no error wire, how do we check the error coverpoint?
+    */
+    ERROR: coverpoint VM.error { 
       bins noError = {0};
       bins error = {1};
     }
     CROSS_COV: cross PRODUCTS, ERROR;
   endgroup
 
+  initial begin
+    random_buy rb = new();
+    Trans_Cov tc = new();
+    Cross_Cov cc = new();
+    
+    //Set initial values ??
+    
+    
+    //Randomize Inputs
+    repeat (100) begin
+      assert (rb.randomize());
+      if (index == 0){ int[5] arr = 10100; }
+      if (index == 1){ int[5] arr = 00010; }
+      if (index == 2){ int[5] arr = 01110; }
+      if (index == 3){ int[5] arr = 01010; }
+      if (index == 4){ int[5] arr = 11111; }
+      
+      
+      
+      
+      
+      
+      tc.sample();
+      cc.sample();
+    
+    
+    
+    
+    end
+    
+    
+  end
 
 
 endmodule
