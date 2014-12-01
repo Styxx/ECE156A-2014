@@ -1,6 +1,6 @@
 /*
 *   Testbench for the Vending Machine
-/*
+*/
 
 class random_buy;
   rand int index;                                     
@@ -36,12 +36,19 @@ module vmTestBench();
     }
   endgroup
   
+  // UNSURE ABOUT THE SYNTAX FOR PRODUCTS COVERPOINT
   covergroup Cross_Cov @ (clk)
     PRODUCTS: coverpoint VM.product {
-      bins appleDetected = {0};           //00
-      bins bananaDetected = {1};          //01
-      bins carrotDetected = {2};          //10
-      bins dateDetected = {3};            //11
+      bins appleDetected = {2'b00};           //00
+      bins bananaDetected = {2'b01};          //01
+      bins carrotDetected = {2'b10};          //10
+      bins dateDetected = {2'b11};            //11
+      /*
+      bins appleDetected = {0};
+      bins bananaDetected = {1};
+      bins carrotDetected = {2};
+      bins dateDetected = {3};
+      */
     }
     /* UNSURE ABOUT THE ERROR COVERPOINT
     *  There is no error signal or wire in the entire module
@@ -60,33 +67,45 @@ module vmTestBench();
     Trans_Cov tc = new();
     Cross_Cov cc = new();
     
-    //Set initial values ??
+    int[5] arr = 11111;
+    int buySig = 0;
+    int prodSig = 0;
+    
+    //Set initial values ?? Is that what I did just above?
     
     
     //Randomize Inputs
     repeat (100) begin
       assert (rb.randomize());
+      
+      //Unsure about all code from this line and below
       if (index == 0){ int[5] arr = 10100; }
-      if (index == 1){ int[5] arr = 00010; }
-      if (index == 2){ int[5] arr = 01110; }
-      if (index == 3){ int[5] arr = 01010; }
-      if (index == 4){ int[5] arr = 11111; }
+      else if (index == 1){ int[5] arr = 00010; }
+      else if (index == 2){ int[5] arr = 01110; }
+      else if (index == 3){ int[5] arr = 01010; }
+      else if (index == 4){ int[5] arr = 11111; }
+      else { int[5] arr = 11111; }
+
+      if (buyC == 0) { buySig = 0; }
+      else { buySig = 1; }
       
+      if (prodSel == 0) { prodSig == 2'b00; }
+      else if (prodSel == 1) { prodSig == 2'b01; }
+      else if (prodSel == 2) { prodSig == 2'b10; }
+      else if (prodSel == 3) { prodSig == 2'b11; }
       
+      // Input code for inputing serialIn from array
+      #10     VM.buy <= buySig;
+      #10     VM.product <= prodSig;
+      #10     VM.serialIn <= arr[4];
+      #20     VM.serialIn <= arr[3];
+      #30     VM.serialIn <= arr[2];
+      #40     VM.serialIn <= arr[1];
+      #50     VM.serialIn <= arr[0];
       
+      tc.sample();        //Gathers coverage
+      cc.sample();        //Gathers coverage
       
-      
-      
-      tc.sample();
-      cc.sample();
-    
-    
-    
-    
     end
-    
-    
   end
-
-
 endmodule
