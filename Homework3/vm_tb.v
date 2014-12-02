@@ -36,25 +36,23 @@ module vmTestBench();
     }
   endgroup
   
-  // UNSURE ABOUT THE SYNTAX FOR PRODUCTS COVERPOINT
+  // This syntax should work.
   covergroup Cross_Cov @ (clk)
     PRODUCTS: coverpoint VM.product {
-      bins appleDetected = {2'b00};           //00
-      bins bananaDetected = {2'b01};          //01
-      bins carrotDetected = {2'b10};          //10
-      bins dateDetected = {2'b11};            //11
-      /*
-      bins appleDetected = {0};
-      bins bananaDetected = {1};
-      bins carrotDetected = {2};
-      bins dateDetected = {3};
-      */
+      bins appleDetected = {0};           //00
+      bins bananaDetected = {1};          //01
+      bins carrotDetected = {2};          //10
+      bins dateDetected = {3};            //11
+      
     }
     /* UNSURE ABOUT THE ERROR COVERPOINT
     *  There is no error signal or wire in the entire module
     *  But VM.[wire] is how we check for coverpoint signals  
     *  If there's no error wire, how do we check the error coverpoint?
     */
+    // Solution
+    // Whatever signal sends the "error" signal to the display, use that signal to
+    // measrue the error coverpoint
     ERROR: coverpoint VM.error { 
       bins noError = {0};
       bins error = {1};
@@ -67,9 +65,9 @@ module vmTestBench();
     Trans_Cov tc = new();
     Cross_Cov cc = new();
     
-    int[5] arr = 11111;
-    int buySig = 0;
-    int prodSig = 0;
+    reg arr = 5'b11111;
+    reg buySig = 2'b00;
+    reg prodSig = 0;
     
     //Set initial values ?? Is that what I did just above?
     
@@ -79,12 +77,12 @@ module vmTestBench();
       assert (rb.randomize());
       
       //Unsure about all code from this line and below
-      if (index == 0){ int[5] arr = 10100; }
-      else if (index == 1){ int[5] arr = 00010; }
-      else if (index == 2){ int[5] arr = 01110; }
-      else if (index == 3){ int[5] arr = 01010; }
-      else if (index == 4){ int[5] arr = 11111; }
-      else { int[5] arr = 11111; }
+      if (index == 0){ arr = 5'b01001; }
+      else if (index == 1){ arr = 5'b00010; }
+      else if (index == 2){ arr = 5'b01110; }
+      else if (index == 3){ arr = 5'b01010; }
+      else if (index == 4){ arr = 5'b11111; }
+      else { int[5] arr = 5'b11111; }
 
       if (buyC == 0) { buySig = 0; }
       else { buySig = 1; }
@@ -95,8 +93,8 @@ module vmTestBench();
       else if (prodSel == 3) { prodSig == 2'b11; }
       
       // Input code for inputing serialIn from array
-      #10     VM.buy <= buySig;
-      #10     VM.product <= prodSig;
+      #10     VM.buy <= buySig;                 // Signal is constant until next run
+      #10     VM.product <= prodSig;            // Signal is constant until next run
       #10     VM.serialIn <= arr[4];
       #20     VM.serialIn <= arr[3];
       #30     VM.serialIn <= arr[2];
