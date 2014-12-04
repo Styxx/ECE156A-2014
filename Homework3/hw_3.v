@@ -347,3 +347,4 @@ module sevenSegDispMngr (clk, reset, apple, banana, carrot, date, error, credit,
 	end
 
 endmodule
+
