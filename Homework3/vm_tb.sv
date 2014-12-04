@@ -7,7 +7,7 @@ class random_buy;
   rand int buyC;                                          //buyChance - chance to buy a product
   rand int prodSel;                                       //productSelection - which product to be bought.
   constraint c { index >= 0; index <=4;                   //0-4 for 4 coins and a no coin signal
-                 buyC dist {[0:2] := 0, [3:4] := 1};      //[0, 0, 0, 1, 1]
+                 buyC >= 0; buyC <=9;                     // 90% no buy, 10% buy
                  prodSel >= 0; prodSel < 4;}              //[00, 01, 10, 11]
 endclass
 
@@ -35,6 +35,18 @@ module vmTestBench();
       bins a75tomax = { [75:254] };
       bins maxC = { 255 };
     }
+    
+    // Credit coverpoint expanded (for testing / debugging)
+    /*
+    A1TO4: coverpoint VM.credit {bins a1to4 = {[1:4]};}
+    A5TO9: coverpoint VM.credit {bins a5to9 = {[5:9]};}
+    A10TO24: coverpoint VM.credit {bins a10to24 = {[10:24]};}
+    A25TO39: coverpoint VM.credit {bins a25to39 = {[25:39]};}
+    A40TO49: coverpoint VM.credit {bins a40to49 = {[40:49]};}
+    A50TO74: coverpoint VM.credit {bins a50to74 = {[50:74]};}
+    A75TOMAX: coverpoint VM.credit {bins a75toMax = {[75:254]};}
+    MAX: coverpoint VM.credit {bins maxC = {255};}
+    */
   endgroup
   
   // This syntax should work.
@@ -68,18 +80,27 @@ module vmTestBench();
     reset <= 0;
     
     //Randomize Inputs
-    repeat (100) begin
+    repeat (5000) begin
       assert (rb.randomize());
       
       
-      if (rb.index == 0) begin arr = 5'b01001; end
+      if      (rb.index == 0) begin arr = 5'b01001; end
       else if (rb.index == 1) begin arr = 5'b00010; end
       else if (rb.index == 2) begin arr = 5'b01110; end
       else if (rb.index == 3) begin arr = 5'b01010; end
       else if (rb.index == 4) begin arr = 5'b11111; end
 
       if (rb.buyC == 0) begin buySig = 0; end
-      else begin buySig = 1; end
+      else if (rb.buyC == 1) begin buySig = 0; end
+      else if (rb.buyC == 2) begin buySig = 0; end
+      else if (rb.buyC == 3) begin buySig = 0; end
+      else if (rb.buyC == 4) begin buySig = 0; end
+      else if (rb.buyC == 5) begin buySig = 0; end
+      else if (rb.buyC == 6) begin buySig = 0; end
+      else if (rb.buyC == 7) begin buySig = 0; end
+      else if (rb.buyC == 8) begin buySig = 0; end
+      else if (rb.buyC == 9) begin buySig = 1; end
+
       
       if (rb.prodSel == 0) begin prodSig = 2'b00; end
       else if (rb.prodSel == 1) begin prodSig = 2'b01; end
