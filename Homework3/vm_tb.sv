@@ -6,8 +6,8 @@ class random_buy;
   rand int index;                                     
   rand int buyC;                                          //buyChance - chance to buy a product
   rand int prodSel;                                       //productSelection - which product to be bought.
-  constraint c { index > 0; index <=4;                    //0-4 for 4 coins and a no coin signal
-                 buyC dist {[0:3] := 0, [4:5] := 1};      //[0, 0, 0, 1, 1]
+  constraint c { index >= 0; index <=4;                   //0-4 for 4 coins and a no coin signal
+                 buyC dist {[0:2] := 0, [3:4] := 1};      //[0, 0, 0, 1, 1]
                  prodSel >= 0; prodSel < 4;}              //[00, 01, 10, 11]
 endclass
 
@@ -59,6 +59,7 @@ module vmTestBench();
     Cross_Cov cc = new();
     
     reg [4:0] arr = 5'b11111;
+    reg index = 0;
     reg buySig = 0;
     reg [1:0] prodSig = 2'b00;
     
@@ -75,6 +76,7 @@ module vmTestBench();
       else if (rb.index == 1) begin arr = 5'b00010; end
       else if (rb.index == 2) begin arr = 5'b01110; end
       else if (rb.index == 3) begin arr = 5'b01010; end
+      else if (rb.index == 4) begin arr = 5'b11111; end
 
       if (rb.buyC == 0) begin buySig = 0; end
       else begin buySig = 1; end
