@@ -87,6 +87,7 @@ module vmTestBench();
       else if (rb.prodSel == 3) begin prodSig = 2'b11; end
       
       // Input code for inputing serialIn from array
+      /*
       #20     reset <= 1;
       #40     buy <= buySig;                 // Signal is constant until next run
       #40     product <= prodSig;            // Signal is constant until next run
@@ -96,14 +97,18 @@ module vmTestBench();
       #80     serialIn <= arr[2];
       #100    serialIn <= arr[1];
       #120    serialIn <= arr[0];
-      #140    serialIn <= 1;
-      #160    serialIn <= 1;
-      #180    serialIn <= 1;
-      #200    serialIn <= 1;
-      #220    serialIn <= 1;
+      */
+      #10 reset = 1;
+      #10 serialIn = arr[4];
+      #10 serialIn = arr[3];
+      #10 serialIn = arr[2];
+      #10 serialIn = arr[1];
+      #10 serialIn = arr[0];
+          buy = buySig;
+          product = prodSig;
     end
   end
   always begin
-		#60 clk <= ~clk;
+		#10 clk <= ~clk;
 	end
 endmodule
