@@ -1,0 +1,31 @@
+
+
+Problem 1: Designing the Vending Machine
+
+Our first task for this homework was to design a fruit vending machine comprised of four modular parts according to the following specifications:
+
+Coin Sensor – The coin sensor is a machine that detects serial binary inputs. Given certain inputs, it outputs signals corresponding to different values of currency – penny, nickel, dime, and quarter. After every coin, the system will reset in order to prepare to input a new sequence for another coin.
+
+Piggy Bank – The piggy bank holds the amount of credit the user has accrued over the duration of the machine's lifetime. The max amount of credit it can hold, in coins, is $2.55. Upon the input of a coin, it adds credit to the bank. Upon the purchase of a product, it deducts credit from the bank.
+
+Purchase Manager – The purchase manager is a machine that detects product inputs and a buy input. If the buy input is active, then the purchase manager is “unlocked” and purchases are able to be made. Depending on the two bit binary input, apples, bananas, carrots, or dates are able to be purchased for varying amounts of currency.
+
+Seven Segment Display Manger – The seven segment display manager shows the accumulated credit of the user. If a purchase is being made, it outputs a corresponding pattern for six cycles, depending on what was being purchased or if an error was made (if there was not enough credit in the piggy bank to buy the desired product).
+
+Each part was designed, created, tested, and debugged separately from each other with their own separate test benches (which have not been included). Once each design worked accordingly, the modules were connected together to create the large Vending Machine module, which inputs the clock, a reset signal, a buy signal, a 2-bit product signal, and a serial coin signal while outputing the digits of the seven segment display in hexadecimal form, according to the light layout format. The entire module was tested to ensure all interactions between the smaller modules worked and that the entire module worked as a whole.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Problem 2: SystemVerilog
+
