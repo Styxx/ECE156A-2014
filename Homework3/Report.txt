@@ -1,25 +1,26 @@
-
+Homework 3 Report
+Vincent “Styxx” Chang
+ECE 156A – T 5:00 – 7:00
 
 Problem 1: Designing the Vending Machine
-
 Our first task for this homework was to design a fruit vending machine comprised of four modular parts according to the following specifications:
 
 Coin Sensor – The coin sensor is a machine that detects serial binary inputs. Given certain inputs, it outputs signals corresponding to different values of currency – penny, nickel, dime, and quarter. After every coin, the system will reset in order to prepare to input a new sequence for another coin.
-
 Piggy Bank – The piggy bank holds the amount of credit the user has accrued over the duration of the machine's lifetime. The max amount of credit it can hold, in coins, is $2.55. Upon the input of a coin, it adds credit to the bank. Upon the purchase of a product, it deducts credit from the bank.
-
 Purchase Manager – The purchase manager is a machine that detects product inputs and a buy input. If the buy input is active, then the purchase manager is “unlocked” and purchases are able to be made. Depending on the two bit binary input, apples, bananas, carrots, or dates are able to be purchased for varying amounts of currency.
+Seven Segment Display Manager – The seven segment display manager shows the accumulated credit of the user. If a purchase is being made, it outputs a corresponding pattern for six cycles, depending on what was being purchased or if an error was made (if there was not enough credit in the piggy bank to buy the desired product).
 
-Seven Segment Display Manger – The seven segment display manager shows the accumulated credit of the user. If a purchase is being made, it outputs a corresponding pattern for six cycles, depending on what was being purchased or if an error was made (if there was not enough credit in the piggy bank to buy the desired product).
-
-Each part was designed, created, tested, and debugged separately from each other with their own separate test benches (which have not been included). Once each design worked accordingly, the modules were connected together to create the large Vending Machine module, which inputs the clock, a reset signal, a buy signal, a 2-bit product signal, and a serial coin signal while outputing the digits of the seven segment display in hexadecimal form, according to the light layout format. The entire module was tested to ensure all interactions between the smaller modules worked and that the entire module worked as a whole.
-
+Each part was designed, created, tested, and debugged separately from each other with their own separate test benches (which have not been included). Once each design worked accordingly, the modules were connected together to create the large Vending Machine module, which inputs the clock, a reset signal, a buy signal, a 2-bit product signal, and a serial coin signal while outputting the digits of the seven segment display in hexadecimal form, according to the light layout format. The entire module was tested to ensure all interactions between the smaller modules worked and that the entire module worked as a whole.
 
 
-Problem 2: SystemVerilog
+Problem 2: Learning SystemVerilog
+The next task of this homework was to create the SystemVerilog to simulate the virtual Vending Machine and test for coverage to ensure that the machine is able to account for all possible scenarios. SystemVerilog test benches consist of a few parts:
 
-The next task of this homework was to create the system verilog to check the Virtual Machine
+Classes for random variables: These classes include randomized variables within given constraints. These variables are randomized in the initial part of the testbench with the assert keyword.
+Covergroups: These covergroups include specified coverpoints that are specified by bins. These coverpoints and bins measure if certain signals have hit certain values. If all the bins in a coverpoint have been hit, then the coverpoint has been met. If all the coverpoints in the covergroup have been met, then the covergroup has been covered. Optimally, after a number of cycles, all covergroups have been covered.
+Testbench: The initial block includes the input values that the randomized variables generated in the classes, as well as instantiations of the classes and the covergroups. It also includes what standard testbenches have: signals that simulate inputs into the machine to run the machine.
+
+After overcoming the syntax barrier of SystemVerilog and debugging the test bench, it was only a matter of simulating enough times before all the coverages were hit. It took multiple times to check to make sure if all of the bins in the credit covergroup were hit. Even expanding the credit covergroup so that each bin was a coverpoint – instead of having one coverpoint consist of multiple bins – helped in figuring out which bins took the longest to hit. In the end, all covergroups were covered, verifying our design as working well.
 
 
-
-
+We start the SystemVerilog test bench with a reset to ensure the system is in working condition. You can see that from then on all inputs, excluding reset, are randomized. The serial input is based off a random number which picks a specific coin sequence to input into the machine. The buy input is based on a distribution – in this case, there is a 90% chance there will be no buy signal and a 10% chance there is a buy signal. This distribution can be arbitrarily, but this specific probability was chosen in order to better hit all bins in the credit coverpoint. The product signal is randomized so that each product has an equal probability of being bought. We continued to simulate until all covergroups were met.
