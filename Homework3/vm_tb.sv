@@ -12,32 +12,33 @@ class random_buy;
 endclass
 
 module vmTestBench();
-  reg clk, reset, serialIn, product, buy;
-  wire digit0, digit1;
+  reg clk, reset, serialIn, buy;
+  reg [1:0] product;
+  wire [6:0] digit0, digit1;
   VendingMachine VM(clk,reset,serialIn,product,buy, digit0,digit1);
   
 //Covergroups
-  covergroup Trans_Cov @ (clk)
+  covergroup Trans_Cov @ (clk);
     PENNY:    coverpoint VM.penny {bins pennyDetected = {1};}    // If the penny signal = 1, then bin is covered
     NICKEL:   coverpoint VM.nickel {bins nickelDetected = {1};}
     DIME:     coverpoint VM.dime {bins dimeDetected = {1};}
     QUARTER:  coverpoint VM.quarter {bins quarterDetected = {1};}
     // Does not ask to cover a no-coin sequence
     
-    CREDITS: coverpoint VM.credits {    
-      bins 1to4 = { [1:4] };                                  // If credits reach value from 1 to 4, bin is covered
-      bins 5to9 = { [5:9] };
-      bins 10to24 = { [10:24] };
-      bins 25to39 = { [25:39] };
-      bins 40to49 = { [40:49] };
-      bins 50to74 = { [50:74] };
-      bins 75tomax = { [75:254] };
+    CREDITS: coverpoint VM.credit {    
+      bins a1to4 = { [1:4] };                                  // If credits reach value from 1 to 4, bin is covered
+      bins a5to9 = { [5:9] };
+      bins a10to24 = { [10:24] };
+      bins a25to39 = { [25:39] };
+      bins a40to49 = { [40:49] };
+      bins a50to74 = { [50:74] };
+      bins a75tomax = { [75:254] };
       bins maxC = { 255 };
     }
   endgroup
   
   // This syntax should work.
-  covergroup Cross_Cov @ (clk)
+  covergroup Cross_Cov @ (clk);
     PRODUCTS: coverpoint VM.product {
       bins appleDetected = {0};           //00
       bins bananaDetected = {1};          //01
@@ -45,14 +46,6 @@ module vmTestBench();
       bins dateDetected = {3};            //11
       
     }
-    /* UNSURE ABOUT THE ERROR COVERPOINT
-    *  There is no error signal or wire in the entire module
-    *  But VM.[wire] is how we check for coverpoint signals  
-    *  If there's no error wire, how do we check the error coverpoint?
-    */
-    // Solution
-    // Whatever signal sends the "error" signal to the display, use that signal to
-    // measrue the error coverpoint
     ERROR: coverpoint VM.error { 
       bins noError = {0};
       bins error = {1};
@@ -65,45 +58,50 @@ module vmTestBench();
     Trans_Cov tc = new();
     Cross_Cov cc = new();
     
-    reg arr = 5'b11111;
-    reg buySig = 2'b00;
-    reg prodSig = 0;
+    reg [4:0] arr = 5'b11111;
+    reg buySig = 0;
+    reg [1:0] prodSig = 2'b00;
     
-    //Set initial values ?? Is that what I did just above?
-    
+    //Set initial values
+    clk <= 0;
+    reset <= 0;
     
     //Randomize Inputs
     repeat (100) begin
       assert (rb.randomize());
       
-      //Unsure about all code from this line and below
-      if (index == 0){ arr = 5'b01001; }
-      else if (index == 1){ arr = 5'b00010; }
-      else if (index == 2){ arr = 5'b01110; }
-      else if (index == 3){ arr = 5'b01010; }
-      else if (index == 4){ arr = 5'b11111; }
-      else { int[5] arr = 5'b11111; }
-
-      if (buyC == 0) { buySig = 0; }
-      else { buySig = 1; }
       
-      if (prodSel == 0) { prodSig == 2'b00; }
-      else if (prodSel == 1) { prodSig == 2'b01; }
-      else if (prodSel == 2) { prodSig == 2'b10; }
-      else if (prodSel == 3) { prodSig == 2'b11; }
+      if (rb.index == 0) begin arr = 5'b01001; end
+      else if (rb.index == 1) begin arr = 5'b00010; end
+      else if (rb.index == 2) begin arr = 5'b01110; end
+      else if (rb.index == 3) begin arr = 5'b01010; end
+
+      if (rb.buyC == 0) begin buySig = 0; end
+      else begin buySig = 1; end
+      
+      if (rb.prodSel == 0) begin prodSig = 2'b00; end
+      else if (rb.prodSel == 1) begin prodSig = 2'b01; end
+      else if (rb.prodSel == 2) begin prodSig = 2'b10; end
+      else if (rb.prodSel == 3) begin prodSig = 2'b11; end
       
       // Input code for inputing serialIn from array
-      #10     VM.buy <= buySig;                 // Signal is constant until next run
-      #10     VM.product <= prodSig;            // Signal is constant until next run
-      #10     VM.serialIn <= arr[4];
-      #20     VM.serialIn <= arr[3];
-      #30     VM.serialIn <= arr[2];
-      #40     VM.serialIn <= arr[1];
-      #50     VM.serialIn <= arr[0];
+      #20     reset <= 1;
+      #40     buy <= buySig;                 // Signal is constant until next run
+      #40     product <= prodSig;            // Signal is constant until next run
       
-      tc.sample();        //Gathers coverage
-      cc.sample();        //Gathers coverage
-      
+      #40     serialIn <= arr[4];
+      #60     serialIn <= arr[3];
+      #80     serialIn <= arr[2];
+      #100    serialIn <= arr[1];
+      #120    serialIn <= arr[0];
+      #140    serialIn <= 1;
+      #160    serialIn <= 1;
+      #180    serialIn <= 1;
+      #200    serialIn <= 1;
+      #220    serialIn <= 1;
     end
   end
+  always begin
+		#60 clk <= ~clk;
+	end
 endmodule
