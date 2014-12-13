@@ -39,6 +39,11 @@ module fsm (clk, x, rs, reset, shift, update, run);
     run = 0;
     
     case (state)
+    /*  
+    *   Reset State
+    *   Initializes the FSM and generates the "reset" signal to
+    *   the control unit.
+    */
     	RS:begin
     		reset = 1;
     		run = 0;
@@ -47,6 +52,11 @@ module fsm (clk, x, rs, reset, shift, update, run);
     		if(!x)	next = RI;
     		else	next = RS;
     	end
+    	/*
+    	*   Run/Idle State
+    	*   The operations given to the control unit are executed only in
+    	*   this state, which is indicated by the "run" signal.
+    	*/
     	RI:begin
     		reset = 0;
     		run = 1;
@@ -55,6 +65,11 @@ module fsm (clk, x, rs, reset, shift, update, run);
     		if(!x)	next = RI;
     		else	next = SH;
     	end
+    	/*
+    	*   Shift State
+    	*   When the FSM reaches this state, the control unit starts to shift
+    	*   the instructions/operands to be executed from the input "data_in."
+    	*/
     	SH:begin
     		reset = 0;
     		run = 0;
@@ -63,6 +78,13 @@ module fsm (clk, x, rs, reset, shift, update, run);
     		if(!x)	next = UP;
     		else	next = SH;
     	end
+    	/*
+    	*   Update
+    	*   Contents of shift register (instructions) are latched onto another
+    	*   set of latches ("shadow" register), so that the instructions/operands
+    	*   are already "stabilized" when executed. The contents are updated by
+    	*   the "update" signal.
+    	*/
     	UP:begin
     		reset = 0;
     		run = 0;
