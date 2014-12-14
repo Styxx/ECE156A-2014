@@ -54,6 +54,8 @@ module control_unit (clk,data_in,reset,run,shift,update, data_out,z);
   		shadow_reg[6] = shift_reg[6];
   		shadow_reg[6] = shift_reg[6];
   		shadow_reg[6] = shift_reg[6];
+  		shadow_reg[6] = shift_reg[6];
+  		shadow_reg[6] = shift_reg[6];
   	end
   
   
