@@ -52,12 +52,18 @@ module control_unit (clk,data_in,reset,run,shift,update, data_out,z);
   	//At "update", shadow register gets content of shift register
   	else if (update) begin
   		shadow_reg[6] = shift_reg[6];
-  		shadow_reg[6] = shift_reg[6];
-  		shadow_reg[6] = shift_reg[6];
-  		shadow_reg[6] = shift_reg[6];
-  		shadow_reg[6] = shift_reg[6];
+  		shadow_reg[5] = shift_reg[5];
+  		shadow_reg[4] = shift_reg[4];
+  		shadow_reg[3] = shift_reg[3];
+  		shadow_reg[2] = shift_reg[2];
+  		shadow_reg[1] = shift_reg[1];
+  		shadow_reg[0] = shift_reg[0];
   	end
-  
+  	//During "run", the stable contents of the shadow register tell the control unit
+  	//or memory unit what to do.
+  	else if (run) begin
+  	
+  	end
   
   
   
