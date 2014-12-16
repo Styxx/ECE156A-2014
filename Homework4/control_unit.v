@@ -88,10 +88,10 @@ module control_unit (clk,data_in,reset,run,shift,update, data_out,z);
   		// Bits 3:2 and 1:0 - Addresses of the operands.
   		if(shadow_reg[7:6] == 2'b10) begin
   			if(shadow_reg[5] == 0) begin
-  				z[4:0] <= shadow_reg[3:2] and shadow_reg[1:0];
+  				z[4:0] <= mem[shadow_reg[3:2]] and mem[shadow_reg[1:0]];
   			end
   			else begin
-  				z[4:0] <= shadow_reg[3:2] or shadow_reg[1:0];
+  				z[4:0] <= mem[shadow_reg[3:2]] or mem[shadow_reg[1:0]];
   			end
   		end
   		// Opcode 11: Buffering data: send input data to output z
