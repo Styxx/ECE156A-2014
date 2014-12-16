@@ -32,7 +32,7 @@ Create a miter w/ gate level and counter
 
 make a testbench to test miter
 
-Note: Miter will never work because there is a delay in one of the files.
+Note: Miter will never always be zero because there is a delay in one of the files.
 
 
 
