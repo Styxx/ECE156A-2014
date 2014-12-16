@@ -18,7 +18,7 @@ dc_shell> write -hierarchy -format verilog -output [make a name up for output fi
 //1
 dc_shell> report_area
 
-//Report stuff you should screenshot
+//Report stuff you should screenshot (AREA REPORT)
 
 
 
@@ -32,5 +32,13 @@ Create a miter w/ gate level and counter
 
 make a testbench to test
 
-
 Miter will never work because there is a delay in one of the files.
+
+
+
+
+Turnin: Counter code + testbench
+Counter waveform
+Gate level output file
+Area report
+Waveform of miter? (Waveform of gate-level simulation/verification)
