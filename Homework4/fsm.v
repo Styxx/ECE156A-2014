@@ -17,6 +17,7 @@ module fsm (clk, x, rs, reset, shift, update, run);
   input x;                                //Signal that makes the FSM change state
   input rs;                               //Signal that initializes the FSM to RS
   output reset, shift, update, run;
+  reg reset, shift, update, run;
   reg [3:0] state, next;
 
   parameter RS = 4'b0001                  //Reset state
@@ -89,7 +90,7 @@ module fsm (clk, x, rs, reset, shift, update, run);
     		reset = 0;
     		run = 0;
     		shift = 0;
-    		update = 0;
+    		update = 1;
     		if(!x)	next = RI;
     		else	next = RS;
     	end
