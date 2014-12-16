@@ -31,3 +31,6 @@ take all of class.v and put in gate level output file
 Create a miter w/ gate level and counter
 
 make a testbench to test
+
+
+Miter will never work because there is a delay in one of the files.
