@@ -1,10 +1,12 @@
+/*
+*	Control Unit for Processor
+*	Includes the memory unit
+*	Vincent "Styxx" Chang
+*/
+
+
 module control_unit (clk,data_in,reset,run,shift,update, data_out,z);
-  // Define the codes for the operations:
-  `define INITLZ_MEM 2'b00
-  `define ARITH 2'b01
-  `define LOGIC 2'b10
-  `define BUFFER 2'b11
-  
+
   // I/O definitions:
   input clk, data_in;								//The clock and the serial input
   input reset, run, shift, update;					//Signals from the FSM
