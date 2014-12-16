@@ -1,5 +1,6 @@
 /*
 * Behavioural counter up to 10(dec)
+* Vincent "Styxx" Chang
 */
 module counter(count, start,reset,clk);
   input start, reset, clk;
