@@ -1,6 +1,6 @@
 // Gate Level Output File
 // From Design Compiler
-module counter ( count, start, reset, clk );
+module gatecount ( count, start, reset, clk );
   output [3:0] count;
   input start, reset, clk;
   wire   n8, n9, n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, n20, n21,
