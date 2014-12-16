@@ -1,4 +1,5 @@
-
+// Gate Level Output File
+// From Design Compiler
 module counter ( count, start, reset, clk );
   output [3:0] count;
   input start, reset, clk;
