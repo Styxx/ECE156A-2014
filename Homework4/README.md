@@ -1,4 +1,4 @@
-How to get DC compiler to work:
+_How to get DC compiler to work:_
 
 - SSH into: linux.engr.ucsb.edu
 - Create new folder "HW5_DC"
@@ -7,7 +7,7 @@ How to get DC compiler to work:
 - run "dc_shell"
 
 
-What i did after DC compiler worked:
+_What i did after DC compiler worked:_
 ```
 dc_shell> read_file [name of counter file]
 //stuff
@@ -24,7 +24,7 @@ dc_shell> report_area
 
 
 
-Then:
+_Then:_
 - Take gate level output file
 - take all of class.v and put in gate level output file
 - Create a miter w/ gate level and counter
@@ -35,7 +35,7 @@ Note: Miter will never always be zero because there is a delay in one of the fil
 
 
 
-Turnin:
+_Turnin:_
 - Counter code + testbench
 - Counter waveform
 - Gate level output file
