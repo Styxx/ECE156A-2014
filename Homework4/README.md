@@ -1,13 +1,14 @@
 How to get DC compiler to work:
 
-SSH into: linux.engr.ucsb.edu
-Create new folder "HW5_DC"
-put counter.v into folder
-put updated .synopsis_DC.setup into folder
-run "dc_shell"
+- SSH into: linux.engr.ucsb.edu
+- Create new folder "HW5_DC"
+- put counter.v into folder
+- put updated .synopsis_DC.setup into folder
+- run "dc_shell"
 
 
 What i did after DC compiler worked:
+```
 dc_shell> read_file [name of counter file]
 //stuff
 dc_shell> link
@@ -19,26 +20,24 @@ dc_shell> write -hierarchy -format verilog -output [make a name up for output fi
 dc_shell> report_area
 
 //Report stuff you should screenshot (AREA REPORT)
-
+```
 
 
 
 Then:
-
-Take gate level output file
-take all of class.v and put in gate level output file
-
-Create a miter w/ gate level and counter
-
-make a testbench to test miter
+- Take gate level output file
+- take all of class.v and put in gate level output file
+- Create a miter w/ gate level and counter
+- make a testbench to test miter
 
 Note: Miter will never always be zero because there is a delay in one of the files.
 
 
 
 
-Turnin: Counter code + testbench
-Counter waveform
-Gate level output file
-Area report
-Waveform of miter? (Waveform of gate-level simulation/verification)
+Turnin:
+- Counter code + testbench
+- Counter waveform
+- Gate level output file
+- Area report
+- Waveform of miter? (Waveform of gate-level simulation/verification)
